@@ -47,22 +47,25 @@ def process_files(api_token, prompt, model, timeout, input_dir, output_dir):
             model=model,
             messages=[{
                 "role": "user",
-                "content": full_prompt
+                "content": full_prompt,
             }],
-            timeout=timeout
+            timeout=timeout,
         )
-        content = completion.choices[0].message.content
 
-        # Skip empty content
+        if not completion.choices or completion.usage.completion_tokens <= 0:
+            print(f"Skipping empty response by {completion.provider}")
+            continue
+
+        content = completion.choices[0].message.content
         if not content:
-            print(f"Skipping empty content")
+            print(f"Skipping empty content by {completion.provider}")
             continue
 
         # Save response
         try:
             with open(output_path, 'w', encoding='utf-8') as out_file:
                 out_file.write(content)
-            print(f"Processed: {output_path}")
+            print(f"Processed: {output_path} by {completion.provider}: {completion.usage.total_tokens} tokens")
         except IOError as e:
             print(f"Failed to save output for {filename}: {str(e)}")
 
