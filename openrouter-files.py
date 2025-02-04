@@ -52,13 +52,13 @@ def process_files(api_token, prompt, model, timeout, input_dir, output_dir):
             timeout=timeout,
         )
 
-        if not completion.choices or completion.usage.completion_tokens <= 0:
-            print(f"Skipping empty response by {completion.provider}")
+        if not completion or not completion.choices or not completion.usage or completion.usage.completion_tokens <= 0:
+            print(f"Skipping empty response")
             continue
 
         content = completion.choices[0].message.content
         if not content:
-            print(f"Skipping empty content by {completion.provider}")
+            print(f"Skipping empty content")
             continue
 
         # Save response
