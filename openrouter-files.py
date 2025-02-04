@@ -3,13 +3,14 @@ import argparse
 from openai import OpenAI
 
 def process_files(api_token, prompt, model, timeout, input_dir, output_dir):
-    # Create output directory if it doesn't exist
+    # Create output directory if not exists
     os.makedirs(output_dir, exist_ok=True)
 
     # Check if input directory exists
     if not os.path.exists(input_dir):
         raise FileNotFoundError(f"Input directory '{input_dir}' not found")
 
+    count = 0
     # Process each file in the input directory
     for filename in os.listdir(input_dir):
         input_path = os.path.join(input_dir, filename)
@@ -19,7 +20,8 @@ def process_files(api_token, prompt, model, timeout, input_dir, output_dir):
         if not os.path.isfile(input_path):
             continue
 
-        if os.path.isfile(output_path):
+        # Skip processed file
+        if os.path.isfile(output_path) and os.path.getsize(output_path) > 0:
             print(f"Skipping existing file: {input_path}")
             continue
 
@@ -51,6 +53,11 @@ def process_files(api_token, prompt, model, timeout, input_dir, output_dir):
         )
         content = completion.choices[0].message.content
 
+        # Skip empty content
+        if not content:
+            print(f"Skipping empty content")
+            continue
+
         # Save response
         try:
             with open(output_path, 'w', encoding='utf-8') as out_file:
@@ -59,11 +66,15 @@ def process_files(api_token, prompt, model, timeout, input_dir, output_dir):
         except IOError as e:
             print(f"Failed to save output for {filename}: {str(e)}")
 
+        count += 1
+
+    return count
+
 if __name__ == "__main__":
     # Read API token from environment
     api_token = os.environ.get("DEEPSEEK_API_TOKEN")
     if not api_token:
-        print("Error: DEEPSEEK_API_TOKEN environment variable not set")
+        print("Error: missing DEEPSEEK_API_TOKEN environment variable")
         exit(1)
 
     # Parse command line arguments
@@ -75,4 +86,12 @@ if __name__ == "__main__":
     parser.add_argument("--output", default="output", help="The output folder")
     args = parser.parse_args()
 
-    process_files(api_token, args.prompt, args.model, args.timeout, args.input, args.output)
+    count = process_files(
+        api_token,
+        args.prompt,
+        args.model,
+        args.timeout,
+        args.input,
+        args.output)
+
+    print(f"Count: {count}")
