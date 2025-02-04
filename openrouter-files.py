@@ -2,7 +2,7 @@ import os
 import argparse
 from openai import OpenAI
 
-def process_files(api_token, prompt, model, input_dir="input", output_dir="output"):
+def process_files(api_token, prompt, model, timeout, input_dir, output_dir):
     # Create output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
 
@@ -19,13 +19,19 @@ def process_files(api_token, prompt, model, input_dir="input", output_dir="outpu
         if not os.path.isfile(input_path):
             continue
 
+        if os.path.isfile(output_path):
+            print(f"Skipping existing file: {input_path}")
+            continue
+
         # Read file content
         try:
             with open(input_path, 'r', encoding='utf-8') as file:
                 file_content = file.read()
         except UnicodeDecodeError:
-            print(f"Skipping non-text file: {filename}")
+            print(f"Skipping non-text file: {input_path}")
             continue
+
+        print(f"Processing: {input_path}")
 
         # Prepare the full prompt
         full_prompt = f"{prompt}\n\n{file_content}"
@@ -36,11 +42,12 @@ def process_files(api_token, prompt, model, input_dir="input", output_dir="outpu
         )
 
         completion = client.chat.completions.create(
-            model="deepseek/deepseek-r1",
+            model=model,
             messages=[{
                 "role": "user",
                 "content": full_prompt
-            }]
+            }],
+            timeout=timeout
         )
         content = completion.choices[0].message.content
 
@@ -48,7 +55,7 @@ def process_files(api_token, prompt, model, input_dir="input", output_dir="outpu
         try:
             with open(output_path, 'w', encoding='utf-8') as out_file:
                 out_file.write(content)
-            print(f"Processed: {filename}")
+            print(f"Processed: {output_path}")
         except IOError as e:
             print(f"Failed to save output for {filename}: {str(e)}")
 
@@ -63,6 +70,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process text files with DeepSeek API")
     parser.add_argument("--prompt", help="The prompt to use for processing files")
     parser.add_argument("--model", help="The model to use for processing files")
+    parser.add_argument("--timeout", default=300, type=int, help="Timeout (in seconds)")
+    parser.add_argument("--input", default="input", help="The input folder")
+    parser.add_argument("--output", default="output", help="The output folder")
     args = parser.parse_args()
 
-    process_files(api_token, args.prompt, args.model)
+    process_files(api_token, args.prompt, args.model, args.timeout, args.input, args.output)

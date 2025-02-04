@@ -17,8 +17,18 @@ export DEEPSEEK_API_TOKEN='api-token'
 ### Run with OpenRouter (DeepSeek R1)
 ```bash
 python openrouter-files.py \
-  --prompt "Translate the following Chinese Buddhism sutra into English:" \
+  --prompt "Translate the following Chinese text into English:" \
   --model "deepseek/deepseek-r1"
+```
+
+Example
+```
+python openrouter-files.py \
+  --prompt "Translate the following Chinese Buddhism sutra into English and output in plain text, no markdown, no formatting:" \
+  --model "deepseek/deepseek-r1" \
+  --input "sutra/grouped-chi" \
+  --output "sutra/grouped-eng" \
+  --timeout 1800
 ```
 
 &copy;2025 [SturaLLM](https://github.com/sutrallm/)
