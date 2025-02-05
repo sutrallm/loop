@@ -11,7 +11,12 @@ fi
 
 for ((run=1; run<=max_runs; run++)); do
     python openrouter-files.py \
-      --prompt "Translate the following Chinese Buddhism sutra into English and output in plain text, translated content only, no markdown, minimum formatting:" \
+      --prompt "Translate the following Chinese Buddhism sutra to English with strict adherence to these rules: \
+          Output Format: Plain text only. No markdown, HTML, special formatting, headings, or italics. \
+          Paragraph Numbers: Preserve all original paragraph numbers (e.g., 1., 2., 3.) exactly as Arabic numerals. Do not convert them to words (e.g., 'One', 'Two', 'I', 'II'). \
+          Whitespace: Avoid extra line breaks, indentation, or spacing. Maintain the original paragraph structure. \
+          Consistency: Ensure numbering, punctuation, and terminology match previous chapters (if applicable). \
+        Here is the text to translate:" \
       --model "deepseek/deepseek-r1" \
       --input "sutra/grouped-chi" \
       --output "sutra/grouped-eng-r1" \
