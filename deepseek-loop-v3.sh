@@ -21,9 +21,9 @@ for ((run=1; run<=max_runs; run++)); do
 				6. Output translated content in plain text and translated content only \
 			Ensure the translation is faithful to the source text's intent and tone." \
 		--prompt "Here is the text to translate:" \
-		--model "deepseek-reasoner" \
+		--model "deepseek-chat" \
 		--temperature=0.3 \
 		--input "sutra/grouped-chi" \
-		--output "sutra/sutra/grouped-eng-ds-r1" \
+		--output "sutra/grouped-eng-ds-v3" \
 		--timeout 600
 done
