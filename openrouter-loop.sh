@@ -19,6 +19,6 @@ for ((run=1; run<=max_runs; run++)); do
         Here is the text to translate:" \
       --model "deepseek/deepseek-r1" \
       --input "sutra/grouped-chi" \
-      --output "sutra/grouped-eng-r1" \
+      --output "sutra/grouped-eng-or-r1" \
       --timeout 1800
 done

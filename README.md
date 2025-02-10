@@ -64,7 +64,7 @@ python openrouter-files.py \
 ```
 
 Example (using OpenRouter `deepseek/deepseek-r1`)
-```
+```bash
 python openrouter-files.py \
   --prompt "Translate the following Chinese Buddhism sutra into English and output in plain text, translated content only, no markdown, minimum formatting:" \
   --model "deepseek/deepseek-r1" \
@@ -74,13 +74,19 @@ python openrouter-files.py \
 ```
 
 Example (using OpenRouter `deepseek/deepseek-r1:free`)
-```
+```bash
 python openrouter-files.py \
   --prompt "Translate the following Chinese Buddhism sutra into English and output in plain text, translated content only, no markdown, minimum formatting:" \
   --model "deepseek/deepseek-r1:free" \
   --input "sutra/grouped-chi" \
   --output "sutra/grouped-eng-or-r1-free" \
   --timeout 1800
+```
+
+Example (loop above prompt for 100 times)
+```bash
+chmod a+x ./openrouter-loop.sh
+./openrouter-loop.sh 100
 ```
 
 Note about [free](https://openrouter.ai/deepseek/deepseek-r1:free) and [paid](https://openrouter.ai/deepseek/deepseek-r1) DeepSeek R1 models on OpenRouter:
