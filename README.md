@@ -54,6 +54,8 @@ python deepseek-files.py \
   --timeout 600
 ```
 
+- DeepSeek API [uptime](https://status.deepseek.com/uptime/)
+
 ### Run with Nvidia
 ```bash
 python nvidia-files.py \
@@ -73,8 +75,6 @@ python nvidia-files.py \
   --output "output" \
   --timeout 1800
 ```
-
-- DeepSeek API [uptime](https://status.deepseek.com/uptime/)
 
 ### Run with OpenRouter
 ```bash
