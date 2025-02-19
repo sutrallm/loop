@@ -112,7 +112,7 @@ chmod a+x ./openrouter-loop.sh
 Note about [free](https://openrouter.ai/deepseek/deepseek-r1:free) and [paid](https://openrouter.ai/deepseek/deepseek-r1) DeepSeek R1 models on OpenRouter:
 <details>
   <summary>Free model providers return lots of empty response:</summary>
-  <img src="https://raw.githubusercontent.com/SutraAI/loop/refs/heads/master/image/openrouter-free-vs-paid.png?token=GHSAT0AAAAAACM2J25GVQ2CP5OKJHNMK3RIZ5BYBQQ">
+  <img src="image/openrouter-free-vs-paid.png">
 </details>
 
 ### Run with SiliconFlow
