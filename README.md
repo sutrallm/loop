@@ -106,7 +106,11 @@ python openrouter-files.py \
 Example (loop above prompt for 100 times)
 ```bash
 chmod a+x ./openrouter-loop.sh
-./openrouter-loop.sh 100
+./openrouter-loop.sh 10 \
+prompt/denoise.txt \
+"qwen/qwen3-vl-235b-a22b-instruct" \
+"sutra/N0006c" \
+"sutra/N0006c-denoise"
 ```
 
 Note about [free](https://openrouter.ai/deepseek/deepseek-r1:free) and [paid](https://openrouter.ai/deepseek/deepseek-r1) DeepSeek R1 models on OpenRouter:
