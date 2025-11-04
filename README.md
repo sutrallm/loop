@@ -9,6 +9,26 @@
 pip install --upgrade openai
 ```
 
+## ToC
+
+### Setup API URL and Key
+```bash
+export PLATFORM_API_URL='https://openrouter.ai/api/v1'
+export PLATFORM_API_KEY={KEY}
+```
+
+### Evolve a ToC
+```
+python evolve-toc.py \
+  --model "deepseek/deepseek-v3.2-exp" \
+  --prompt "prompt/evolve-toc.txt" \
+  --base "param/toc.txt" \
+  --input "sutra/N0006c" \
+  --output "sutra/N0006c-toc-20251105-deepseek-v32"
+```
+
+## Loop
+
 ### Setup API token
 ```bash
 export DEEPSEEK_API_TOKEN='api-token'
