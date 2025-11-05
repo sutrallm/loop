@@ -5,6 +5,17 @@ from typing import Optional
 from pathlib import Path
 from openai import OpenAI
 
+TAGS = ("現有標題", "新增標題", "潛在標題")
+_PAIR_RE = {
+    tag: re.compile(rf"^\s*<{tag}>\s*$.*?^\s*</{tag}>\s*$",
+                    re.MULTILINE | re.DOTALL)
+    for tag in TAGS
+}
+
+def tags_ok(content: str) -> bool:
+    return all(len(_PAIR_RE[tag].findall(content)) == 1 for tag in TAGS)
+
+
 def increment(name: str, digits: Optional[int] = None) -> str:
     m = re.search(r'(\d+)(?=\.\w+$)', name)
     if m:
@@ -125,9 +136,9 @@ def process_files(url, key, args):
 
         # Prepare the full prompt
         question = prompt.replace("!!TOC!!", toc_content).replace("!!FILE!!", file_content)
-        print('********')
-        print(question)
-        print('********')
+        # print('********')
+        # print(question)
+        # print('********')
 
         client = OpenAI(
             base_url = url,
@@ -159,6 +170,10 @@ def process_files(url, key, args):
             if content.find(args.skip) >= 0:
                 print(f"Skipping no change")
                 continue
+
+            if not tags_ok(content):
+                print(f"Tags not OK")
+                continue		
 
             version += 1
 
