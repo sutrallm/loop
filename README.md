@@ -27,6 +27,19 @@ python evolve-toc.py \
   --output "sutra/N0006c-toc-20251105-deepseek-v32"
 ```
 
+### Split a ToC
+```
+python split-toc.py \
+  --model "deepseek/deepseek-v3.2-exp" \
+  --prompt "prompt/split-toc.txt" \
+  --mapping "param/mapping.xlsx" \
+  --number "1.2.1" \
+  --remark "無常與緣起的總觀" \
+  --base "param/toc-3.txt" \
+  --input "sutra/N0006c-dds-20251111" \
+  --output "sutra/N0006c-dds-20251111-1.2.1-split"
+```
+
 ### Concat sections
 ```
 pip install pandas openpyxl
