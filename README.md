@@ -27,6 +27,14 @@ python evolve-toc.py \
   --output "sutra/N0006c-toc-20251105-deepseek-v32"
 ```
 
+### Concat sections
+```
+pip install pandas openpyxl
+```
+```
+python concat.py param/mapping.xlsx 2.2.2 sutra/N0006c-dds-20251111 N0006_ output/N0006c-dds-20251111-concat-2.2.2.txt
+```
+
 ## Loop
 
 ### Setup API token
