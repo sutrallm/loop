@@ -40,6 +40,15 @@ python split-toc.py \
   --output "sutra/N0006c-dds-20251111-1.2.1-split"
 ```
 
+### Story from ToC
+```
+python story-toc.py \
+  --model "deepseek/deepseek-v3.2-exp" \
+  --prompt "prompt/story-toc.txt" \
+  --input "sutra/N0006c-dds-20251111-1.2.1-split" \
+  --output "sutra/N0006c-dds-20251111-1.2.1-story"
+```
+
 ### Concat sections
 ```
 pip install pandas openpyxl
