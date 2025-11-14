@@ -25,10 +25,10 @@ def concat_to(abstract_nos, folder, prefix, filename):
                 continue
             with open(pathname, "r", encoding="utf-8") as in_f:
                 print(f"{pathname} ...")
-                out_f.write(f"<ABSTRACT:{base_name}>\n")
+                out_f.write(f"<文檔:{base_name}>\n")
                 out_f.write(in_f.read())
                 out_f.write("\n")
-                out_f.write(f"</ABSTRACT:{base_name}>\n")
+                out_f.write(f"</文檔:{base_name}>\n")
                 out_f.write("\n")
 
 def main():
