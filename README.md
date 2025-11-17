@@ -40,6 +40,18 @@ python split-toc.py \
   --output "sutra/N0006c-dds-20251111-1.2.1-split"
 ```
 
+### Split all
+```
+python split-all.py \
+  --model "deepseek/deepseek-v3.2-exp" \
+  --prompt "prompt/split-two.txt" \
+  --mapping "param/mapping.xlsx" \
+  --sheet "count" \
+  --base "param/toc-3.txt" \
+  --input "sutra/N0006c-dds-20251111" \
+  --output "sutra/N0006c-dds-20251111-splits-20251117"
+```
+
 ### Story from ToC
 ```
 python story-toc.py \
