@@ -35,6 +35,8 @@ def process_files(url, key, args):
             '--base', str(args.base),
             '--input', str(args.input),
             '--output', os.path.join(str(args.output), number),
+            '--temperature', str(args.temperature),
+            '--timeout', str(args.timeout),
         ]
 
         subprocess.run(command)
@@ -63,6 +65,7 @@ if __name__ == "__main__":
     parser.add_argument("--base", help="The base toc to use as reference")
     parser.add_argument("--input", default="input", help="The input folder")
     parser.add_argument("--output", default="output", help="The output folder")
+    parser.add_argument("--temperature", default=1.0, type=float, help="Temperature (default 1.0)")
     parser.add_argument("--timeout", default=600, type=int, help="Timeout (in seconds)")
     parser.add_argument("--retry", default=10, type=int, help="Retry of API response (in seconds)")
     args = parser.parse_args()

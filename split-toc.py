@@ -85,6 +85,7 @@ def process_files(url, key, args):
                     "role": "user",
                     "content": question,
                 }],
+                temperature = args.temperature,
                 timeout = args.timeout,
             )
 
@@ -139,6 +140,7 @@ if __name__ == "__main__":
     parser.add_argument("--input", default="input", help="The input folder")
     parser.add_argument("--output", default="output", help="The output folder")
     parser.add_argument("--timeout", default=600, type=int, help="Timeout (in seconds)")
+    parser.add_argument("--temperature", default=1.0, type=float, help="Temperature (default 1.0)")
     parser.add_argument("--retry", default=10, type=int, help="Retry of API response (in seconds)")
     args = parser.parse_args()
 
