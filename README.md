@@ -52,6 +52,16 @@ python split-all.py \
   --output "sutra/N0006c-dds-20251111-splits-20251117"
 ```
 
+### Merge dds into a single file
+```
+python merge-dds.py \
+  --input "sutra/N0006c-dds-20251111" \
+  --output "sutra/N0006c-merge-20251128" \
+  --filename "N0006c-dds-merged.txt" \
+  --lines 1 \
+  --limit 1000
+```
+
 ### Story from ToC
 ```
 python story-toc.py \
