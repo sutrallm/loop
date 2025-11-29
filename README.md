@@ -62,13 +62,17 @@ python merge-dds.py \
   --limit 1000
 ```
 
-### Story from ToC
+### Essay from ToC
 ```
-python story-toc.py \
+python essay-toc.py \
   --model "deepseek/deepseek-v3.2-exp" \
-  --prompt "prompt/story-toc.txt" \
-  --input "sutra/N0006c-dds-20251111-1.2.1-split" \
-  --output "sutra/N0006c-dds-20251111-1.2.1-story"
+  --prompt "prompt/essay-toc.txt" \
+  --base "param/toc-3-only.txt" \
+  --merged "input/N0006c-dds-merged.txt" \
+  --mapping "param/mapping2.xlsx" \
+  --section "2.2.2" \
+  --input "sutra/N0006c-dds-20251111" \
+  --output "output/N0006c-story-20251129"
 ```
 
 ### Concat sections
