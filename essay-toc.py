@@ -71,6 +71,13 @@ def process_files(url, key, args):
             print(f"{number} not in mappings")
             continue
 
+        question_file = os.path.join(args.output, f"{number}-question.txt")
+        answer_file = os.path.join(args.output, f"{number}-answer.txt")
+
+        if os.path.exists(answer_file):
+            print(f"{number} already exist")
+            continue
+
         count += 1
         print(f"{number} -> {title}")
 
@@ -83,8 +90,7 @@ def process_files(url, key, args):
         retry = 0
         while retry < args.retry:
 
-            question_path = os.path.join(args.output, f"{number}-question.txt")
-            with open(question_path, 'w', encoding='utf-8') as out_file:
+            with open(question_file, 'w', encoding='utf-8') as out_file:
                 out_file.write(question)
 
             print("QUESTION---")
@@ -117,8 +123,7 @@ def process_files(url, key, args):
             print("CONTENT---")
             print(content)
 
-            output_path = os.path.join(args.output, f"{number}-answer.txt")
-            with open(output_path, 'w', encoding='utf-8') as out_file:
+            with open(answer_file, 'w', encoding='utf-8') as out_file:
                 out_file.write(content)
 
             break # retry
