@@ -27,7 +27,7 @@ def group_cn_by_dn(filename):
 
     return dict(grouped)
 
-def breakby(content):
+def break_by(content):
     splitter = re.compile(r'^(?=\d+(?:\.\d+)*\.?\s)', re.MULTILINE)
     pieces = [b for b in splitter.split(content) if b.strip()]
 
@@ -46,7 +46,6 @@ def parse_tocs(text: str):
 
 def process_files(url, key, args):
 
-    concat = ""
     count = 0
 
     with open(args.prompt, 'r', encoding='utf-8') as file:
@@ -59,7 +58,7 @@ def process_files(url, key, args):
         base_toc = file.read()
 
     mappings = group_cn_by_dn(args.mapping)
-    values = dict(breakby(merged))
+    values = dict(break_by(merged))
 
     tocs = parse_tocs(base_toc)
     for number, title in tocs:
@@ -71,30 +70,37 @@ def process_files(url, key, args):
             print(f"{number} not in mappings")
             continue
 
-        question_file = os.path.join(args.output, f"{number}-question.txt")
-        answer_file = os.path.join(args.output, f"{number}-answer.txt")
+        prompt_file = os.path.join(args.output, f"{number}-prompt.txt")
+        result_file = os.path.join(args.output, f"{number}-result.txt")
 
-        if os.path.exists(answer_file):
+        if os.path.exists(result_file):
             print(f"{number} already exist")
             continue
 
         count += 1
         print(f"{number} -> {title}")
 
+        concat = ""
+        concated = []
         for linking in mappings[number]:
-            concat += values[linking]
+            if linking not in concated:
+                concated.append(linking)
+                concat += values[linking]
 
         question = prompt.replace("!!CONTENT!!", concat)
         # print(f"{number} -> {question}")
 
+        with open(prompt_file, 'w', encoding='utf-8') as out_file:
+            out_file.write(question)
+
+        print("QUESTION---")
+        print(question)
+
+        if args.trial == True:
+            continue
+
         retry = 0
         while retry < args.retry:
-
-            with open(question_file, 'w', encoding='utf-8') as out_file:
-                out_file.write(question)
-
-            print("QUESTION---")
-            print(question)
 
             client = OpenAI(
                 base_url = url,
@@ -123,7 +129,7 @@ def process_files(url, key, args):
             print("CONTENT---")
             print(content)
 
-            with open(answer_file, 'w', encoding='utf-8') as out_file:
+            with open(result_file, 'w', encoding='utf-8') as out_file:
                 out_file.write(content)
 
             break # retry
@@ -155,6 +161,7 @@ if __name__ == "__main__":
     parser.add_argument("--output", default="output", help="The output folder")
     parser.add_argument("--timeout", default=600, type=int, help="Timeout (in seconds)")
     parser.add_argument("--temperature", default=1.0, type=float, help="Temperature (default 1.0)")
+    parser.add_argument("--trial", default=False, type=bool, help="Trial run, no API call")
     parser.add_argument("--retry", default=10, type=int, help="Retry of API response (in seconds)")
     args = parser.parse_args()
 
