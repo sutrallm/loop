@@ -85,4 +85,4 @@ pip install pandas openpyxl
 python concat.py param/mapping.xlsx 2.2.2 sutra/N0006c-dds-20251111 N0006_ output/N0006c-dds-20251111-concat-2.2.2.txt
 ```
 
-&copy;2025 [SturaLLM](https://github.com/sutrallm/)
+&copy;2025 [SutraLLM](https://github.com/sutrallm/)
